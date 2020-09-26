@@ -1,0 +1,147 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Art/human/barry3.png" type="Texture" id=1]
+[ext_resource path="res://Script/Player.gd" type="Script" id=2]
+[ext_resource path="res://Art/human/barry5.png" type="Texture" id=4]
+[ext_resource path="res://Art/human/barry1.png" type="Texture" id=9]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Hurtbox.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Audio/Ow/Ow4.wav" type="AudioStream" id=12]
+[ext_resource path="res://Audio/Ow/Ow1.wav" type="AudioStream" id=13]
+[ext_resource path="res://Audio/Ow/Ow2.wav" type="AudioStream" id=14]
+[ext_resource path="res://Audio/Ow/Ow3.wav" type="AudioStream" id=15]
+[ext_resource path="res://Audio/Honey.wav" type="AudioStream" id=16]
+[ext_resource path="res://Audio/Woosh.wav" type="AudioStream" id=17]
+[ext_resource path="res://Montserrat/Montserrat-Bold.ttf" type="DynamicFontData" id=18]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "capture",
+"speed": 3.0
+}, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "collect",
+"speed": 3.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 64.6547
+height = 363.675
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 56.1794
+height = 95.503
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 41.4077
+height = 106.859
+
+[sub_resource type="DynamicFont" id=5]
+size = 26
+use_filter = true
+font_data = ExtResource( 18 )
+
+[node name="Player" type="KinematicBody2D"]
+z_index = -1
+collision_layer = 2
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+frames = SubResource( 1 )
+
+[node name="Feet" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( -4.36308, 91.6248 )
+rotation = 1.51669
+scale = Vector2( 0.25, 0.25 )
+shape = SubResource( 2 )
+
+[node name="NetL" parent="." instance=ExtResource( 10 )]
+position = Vector2( -72.4719, 23.562 )
+collision_layer = 2147483648
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="NetL" index="0"]
+position = Vector2( -7.67215, -57.7762 )
+rotation = 0.432842
+shape = SubResource( 3 )
+disabled = true
+
+[node name="NetR" parent="." instance=ExtResource( 10 )]
+position = Vector2( -72.4719, 23.562 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="NetR" index="0"]
+position = Vector2( 153.883, -57.77 )
+rotation = -0.432842
+shape = SubResource( 3 )
+disabled = true
+
+[node name="Hurtbox" parent="." instance=ExtResource( 11 )]
+position = Vector2( -10.3433, 2.58734 )
+collision_layer = 4
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 6.67865, -4.00717 )
+shape = SubResource( 4 )
+
+[node name="Ow1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+
+[node name="Ow2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+
+[node name="Ow3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 15 )
+
+[node name="Ow4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="Woosh" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
+
+[node name="Honey" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+
+[node name="Points" type="Label" parent="."]
+visible = false
+margin_left = -150.055
+margin_top = -45.3924
+margin_right = -98.0553
+margin_bottom = -12.3924
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "+15"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="Label" parent="."]
+visible = false
+margin_left = 77.8959
+margin_top = -47.1321
+margin_right = 129.896
+margin_bottom = -14.1321
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "-1 HP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="NetL"]
+
+[editable path="NetR"]
+
+[editable path="Hurtbox"]

@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Art/Ash Illustrations/knight3.png" type="Texture" id=1]
+[ext_resource path="res://Art/Ash Illustrations/knight1.png" type="Texture" id=2]
+[ext_resource path="res://Hurtbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=5]
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends \"res://Script/Bee.gd\"
+
+func _ready():
+	$Sprite.animation = mood[randi() % mood.size()]
+	$MoveTimer.start() 
+	if $Sprite.animation == \"default\":
+		$SpearUp/CollisionShape2D.disabled = false
+	else:
+		$SpearDown/CollisionShape2D.disabled = false
+"
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "angry",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 29.5143
+height = 0.0
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 8.7138
+height = 0.0
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 5.90287
+height = 16.3032
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 5.60119
+height = 23.2616
+
+[node name="KnightBee" type="KinematicBody2D"]
+z_index = -1
+collision_layer = 0
+collision_mask = 0
+script = SubResource( 7 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.12, 0.12 )
+frames = SubResource( 10 )
+
+[node name="MoveTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Hurtbox" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1.22586, 6.14324 )
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( -5.0596, -7.87049 )
+shape = SubResource( 11 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 5 )]
+position = Vector2( -3.83376, 4.17562 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 31.2009, -8.99485 )
+shape = SubResource( 12 )
+
+[node name="SpearDown" parent="." instance=ExtResource( 4 )]
+position = Vector2( -18.7315, 27.7871 )
+
+[node name="CollisionShape2D" parent="SpearDown" index="0"]
+position = Vector2( -21.6439, -33.7307 )
+rotation = -1.5708
+shape = SubResource( 5 )
+disabled = true
+
+[node name="SpearUp" parent="." instance=ExtResource( 4 )]
+position = Vector2( -37.5644, 5.86215 )
+
+[node name="CollisionShape2D" parent="SpearUp" index="0"]
+position = Vector2( 3.65416, -29.5143 )
+rotation = -0.392699
+shape = SubResource( 6 )
+disabled = true
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
+
+[editable path="Hurtbox"]
+
+[editable path="Hitbox"]
+
+[editable path="SpearDown"]
+
+[editable path="SpearUp"]

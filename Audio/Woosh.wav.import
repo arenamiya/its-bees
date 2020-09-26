@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Woosh.wav-d56f939102dbd0bfb646c715b9cb0e87.sample"
+
+[deps]
+
+source_file="res://Audio/Woosh.wav"
+dest_files=[ "res://.import/Woosh.wav-d56f939102dbd0bfb646c715b9cb0e87.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

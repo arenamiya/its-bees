@@ -1,0 +1,202 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Script/Game.gd" type="Script" id=2]
+[ext_resource path="res://Art/Bee Background.png" type="Texture" id=3]
+[ext_resource path="res://Art/Bee Counter and Points counter seperate.png" type="Texture" id=4]
+[ext_resource path="res://VarelaRound-Regular.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Script/SpawnArea.gd" type="Script" id=6]
+[ext_resource path="res://Montserrat/Montserrat-Black.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Montserrat/Montserrat-Bold.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://Audio/Loop1.wav" type="AudioStream" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+outline_color = Color( 0.0784314, 0.0156863, 0.0313726, 1 )
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 25.9796, 17.9214 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 19.6979, 15.5802 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 81.7772, 72.4788 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 37
+use_filter = true
+font_data = ExtResource( 5 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 141.897, 68.0199 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+
+[node name="Info" type="Label" parent="GameOver"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = 44.0
+margin_right = 154.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "click anywhere to go back to menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="End" type="Label" parent="GameOver"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -328.0
+margin_top = -61.5
+margin_right = 328.0
+margin_bottom = 61.5
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "GAME OVER"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="GameOver"]
+margin_right = 1040.0
+margin_bottom = 664.0
+disabled = true
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BeeKeeper" parent="." instance=ExtResource( 1 )]
+position = Vector2( 821.824, 416.113 )
+
+[node name="HivesTrees" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="H1" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 83.7513, 447.345 )
+shape = SubResource( 3 )
+
+[node name="H2" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 169.657, 488.753 )
+shape = SubResource( 3 )
+
+[node name="H3" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 260.203, 452.801 )
+shape = SubResource( 3 )
+
+[node name="T1" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 476.589, 153.599 )
+shape = SubResource( 4 )
+
+[node name="T2" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 392.347, 96.6793 )
+shape = SubResource( 4 )
+
+[node name="T3" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 547.17, 59.112 )
+shape = SubResource( 4 )
+
+[node name="T4" type="CollisionShape2D" parent="HivesTrees"]
+position = Vector2( 923.981, 306.145 )
+shape = SubResource( 4 )
+
+[node name="Barn" type="StaticBody2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barn"]
+position = Vector2( 868.282, 58.6717 )
+rotation = -0.127409
+shape = SubResource( 5 )
+
+[node name="HealthLabel" type="Label" parent="."]
+margin_left = 80.0
+margin_top = 80.0
+margin_right = 200.0
+margin_bottom = 125.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 80.0
+margin_top = 16.0
+margin_right = 200.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bee Counter and Points counter seperate" type="Sprite" parent="."]
+show_behind_parent = true
+position = Vector2( 108.615, 70.5753 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SpawnArea" type="Area2D" parent="."]
+collision_mask = 0
+script = ExtResource( 6 )
+
+[node name="SpawnTimer" type="Timer" parent="SpawnArea"]
+one_shot = true
+
+[node name="SpawnBees" type="CollisionShape2D" parent="SpawnArea"]
+visible = false
+position = Vector2( 171.001, 450.296 )
+shape = SubResource( 7 )
+
+[node name="SpawnArea2" type="Area2D" parent="."]
+collision_layer = 8
+script = ExtResource( 6 )
+
+[node name="SpawnTimer" type="Timer" parent="SpawnArea2"]
+one_shot = true
+
+[node name="SpawnBees" type="CollisionShape2D" parent="SpawnArea2"]
+visible = false
+position = Vector2( 869.119, 83.2661 )
+shape = SubResource( 7 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Bee Background" type="Sprite" parent="ParallaxBackground"]
+position = Vector2( 512.415, 297.725 )
+scale = Vector2( 0.195, 0.2 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Song" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+autoplay = true
+[connection signal="pressed" from="GameOver/Button" to="." method="_on_Button_pressed"]
+[connection signal="area_entered" from="SpawnArea" to="." method="_on_SpawnArea_area_entered"]
+[connection signal="area_exited" from="SpawnArea" to="." method="_on_SpawnArea_area_exited"]
+[connection signal="timeout" from="SpawnArea/SpawnTimer" to="SpawnArea" method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="SpawnArea2/SpawnTimer" to="SpawnArea2" method="_on_SpawnTimer_timeout"]
+[connection signal="finished" from="Song" to="." method="_on_Song_finished"]

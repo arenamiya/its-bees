@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Art/Ash Illustrations/drag2.png" type="Texture" id=1]
+[ext_resource path="res://Art/Ash Illustrations/drag4.png" type="Texture" id=2]
+[ext_resource path="res://Hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Hitbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Script/Bee.gd" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "angry",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 31.9308
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 4.30467
+height = 0.0
+
+[node name="DragBee" type="KinematicBody2D"]
+z_index = -1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 5 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.12, 0.12 )
+frames = SubResource( 1 )
+animation = "angry"
+
+[node name="MoveTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+position = Vector2( -0.482315, 1.89555 )
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2( 0, -2.23205 )
+shape = SubResource( 2 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+position = Vector2( 27.879, 1.52238 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2( 3.09052, -0.902283 )
+shape = SubResource( 3 )
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Hurtbox"]
+
+[editable path="Hitbox"]
